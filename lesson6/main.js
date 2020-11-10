@@ -1,7 +1,9 @@
 var app = new Vue({
     el: '#app',
     data:{
+        brand: 'Vue Mastery',
         product: 'Socks',
+        selectedVariant: 0,
         image:'./assets/image1.png',
         inStock: false,
         details: ["80% cotton","20% polester", "Gender-neutral"],
@@ -24,11 +26,20 @@ var app = new Vue({
         addToCart: function(){
             this.cart += 1
         },
-        updateProduct: function (variantImage){
-            this.image = variantImage
+        updateProduct: function (index){
+            this.selectedVariant = index
+            console.log(index)
         },
         decToCart: function(){
             this.cart -= 1
+        }
+    },
+    computed: {
+        title(){
+            return this.brand + ' ' + this.product
+        },
+        image(){
+            return this.variants[this.selectedVariant].variantImage
         }
     }
 
