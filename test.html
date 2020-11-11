@@ -1,0 +1,33 @@
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+ <button v-on:click="getWeather()">Lấy thông tin thời tiết</button>
+ <div v-if="weather">
+   <p><b>Thời tiết Hà Nội hiện tại</b></p>
+   <p>Nhiệt độ : {{ weather.main.temp }} °C</p>
+   <p>Độ ẩm : {{ weather.main.humidity }} %</p>
+   <p>Áp suất khí quyển : {{ weather.main.pressure/1000 }} atm</p>
+ </div>
+</div>
+
+<script>
+ new Vue({
+   el: "#app",
+   data: {
+     weather: null,
+     server_url: "http://api.openweathermap.org/data/2.5/weather",
+     location_id: "1581129",
+     api_key: "d6477696b63c2e661af64eead58c11d9",
+   },
+
+   methods: {
+     async getWeather() {
+       var url = this.server_url + `?id=${this.location_id}&units=metric&appid=${this.api_key}`;
+       var response = await fetch(url);
+       this.weather = await response.json();
+     }
+   },
+ });
+</script>
+
